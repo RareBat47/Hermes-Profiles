@@ -1,0 +1,53 @@
+# Secrets and Credentials
+.env
+.env.*
+auth.json
+auth.lock
+*.key
+*.pem
+*.token
+
+# Databases, Sessions & Locks
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+state.db*
+projects.db*
+*.lock
+.*.lock
+cron/executions.db*
+cron/output/
+cron/ticker_*
+cron/.*
+
+# Large Caches & Ephemeral Directories
+cache/
+runtime/
+audio_cache/
+image_cache/
+logs/
+sessions/
+backups/
+sandboxes/
+tmp/
+.locks/
+.curator_backups/
+.hub/index-cache/
+models_dev_cache.*
+.skills_prompt_snapshot.json
+*.log
+__pycache__/
+*.pyc
+plugin-update-checks/
+.pytest_cache/
+
+# Workspace Builds & Ephemeral State
+workspace/clean_room/*
+!workspace/clean_room/README.md
+workspace/dirty_room/*
+!workspace/dirty_room/README.md
+workspace/sir_contracts/*
+!workspace/sir_contracts/README.md
+workspace/*.db
+workspace/*.log

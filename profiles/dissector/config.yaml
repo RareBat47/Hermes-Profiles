@@ -1,0 +1,69 @@
+# Hermes Dissector Profile Configuration
+# Specialized for clean-room reverse engineering, protocol dissection, and SIR contract synthesis.
+
+model:
+  default: gemini-3.8-flash-high
+  provider: custom:Antigravity
+  switch_context_confirm_tokens: 0
+  aliases:
+    planning: claude-opus-5-5-medium
+    architect: claude-opus-5-5-medium
+    coding: gemini-3.8-flash-high
+    review: claude-sonnet-5-5-high
+    debugging: claude-sonnet-5-5-high
+    pro: gemini-3.1-pro-low
+
+providers:
+  Antigravity:
+    base_url: http://127.0.0.1:8999/v1
+    key_env: HERMES_ANTIGRAVITY_API_KEY
+    api_mode: chat_completions
+  OpenRouter:
+    base_url: https://openrouter.ai/api/v1
+    key_env: OPENROUTER_API_KEY
+    api_mode: chat_completions
+
+fallback_providers:
+  - provider: custom:Antigravity
+    model: gemini-3.1-pro-low
+  - provider: custom:Antigravity
+    model: claude-opus-5-5-medium
+
+# Native MCP Servers for Dissector
+mcp_servers:
+  filesystem:
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-filesystem", "./workspace"]
+    timeout: 60
+  sqlite:
+    command: uvx
+    args: ["mcp-server-sqlite", "--db-path", "./workspace/target.db"]
+    timeout: 60
+  fetch:
+    command: uvx
+    args: ["mcp-server-fetch"]
+    timeout: 60
+
+terminal:
+  backend: local
+  timeout: 180
+  home_mode: auto
+
+browser:
+  inactivity_timeout: 120
+  extension_control:
+    enabled: false
+
+compression:
+  enabled: true
+  threshold: 0.50
+  target_ratio: 0.20
+  protect_last_n: 20
+  min_tail_user_messages: 1
+  max_attempts: 3
+
+delegation:
+  max_iterations: 250
+
+skills:
+  creation_nudge_interval: 15
